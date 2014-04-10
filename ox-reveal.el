@@ -108,6 +108,11 @@
   :group 'org-export-reveal
   :type 'string)
 
+(defcustom org-reveal-footnote-format "[%s]"
+  "The format for the footnote reference.
+%s will be replaced by the footnote reference itself."
+  :group 'org-export-reveal
+  :type 'string)
 
 (defcustom org-reveal-title-slide-temp
   "<h1>%t</h1>\n<h2>%a</h2>\n<h2>%e</h2>\n<h3>%d</h3>"
@@ -601,7 +606,7 @@ the plist used as a communication channel."
 This function is borrowed from `org-html-format-footnote-definition'."
     (format
      "<div class=\"footdef\">%s %s</div>\n"
-     (format org-html-footnote-format
+     (format org-reveal-footnote-format
 	     (let* ((id (format "fn.%s" n))
 		    (href (format " href=\"#fnr.%s\"" n))
 		    (attributes (concat " class=\"footnum\"" href)))
