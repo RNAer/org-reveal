@@ -66,6 +66,8 @@
     (:reveal-margin nil "reveal_margin" -1 t) ; slide margin
     (:reveal-min-scale nil "reveal_min_scale" -1 t)
     (:reveal-max-scale nil "reveal_max_scale" -1 t)
+    ;; enable mathjax by default. To disable mathjax:
+    ;; #+OPTIONS: reveal_mathjax:nil
     (:reveal-mathjax nil "reveal_mathjax" t t)
     (:reveal-mathjax-url "REVEAL_MATHJAX_URL" nil org-reveal-mathjax-url t)
     (:reveal-root "REVEAL_ROOT" nil org-reveal-root t)
@@ -77,11 +79,9 @@
     (:reveal-title-slide-temp "REVEAL_TITLE_SLIDE_TEMP" nil org-reveal-title-slide-temp t)
     (:reveal-title-slide-attr "REVEAL_TITLE_SLIDE_ATTR" nil nil space)
     (:reveal-preamble "REVEAL_PREAMBLE" nil org-reveal-preamble t)
-    (:reveal-head-preamble "REVEAL_HEAD_PREAMBLE" nil org-reveal-head-preamble t)
+    (:reveal-head-preamble "REVEAL_HEAD_PREAMBLE" nil org-reveal-head-preamble newline)
     (:reveal-postamble "REVEAL_POSTAMBLE" nil org-reveal-postamble t))
 
-  ;; TODO: add reveal-img (for layout)
-  ;; TODO: add video for html5 export
   :translate-alist
   '((export-block . org-reveal-export-block)
     (headline . org-reveal-headline)
@@ -303,12 +303,22 @@ using custom variable `org-reveal-root'."
 <!-- For syntax highlighting -->
 <link rel=\"stylesheet\" href=\"%s\">
 
-<!-- For footnote -->
+<!-- For specific styles: footnote and code -->
 <style>
     .reveal section div.footdef {
-       font-size: 0.6em;
-       text-align: left;
+        font-size: 0.6em;
+        text-align: left;
     }
+
+    .reveal section code {
+        border:1px outset grey;
+    }
+
+    /* change center alignment to left */
+    .reveal section p {
+	text-align: left;
+    }
+
 </style>
 
 <!-- For PDF export: URL?print-pdf#/ -->
@@ -702,11 +712,11 @@ info is a plist holding export options."
            (if-format " lang=\"%s\"" (plist-get info :language)))
    "<meta charset=\"utf-8\"/>\n"
    (if-format "<title>%s</title>\n" (org-export-data (plist-get info :title) info))
-   (if-format "<meta name=\"author\" content=\"%s\"/>\n" (plist-get info :author))
+   (if-format "<meta name=\"author\" content=\"%s\"/>\n" (org-export-data (plist-get info :author) info))
    (if-format "<meta name=\"description\" content=\"%s\"/>\n" (plist-get info :description))
    (if-format "<meta name=\"keywords\" content=\"%s\"/>\n" (plist-get info :keywords))
-   (org-reveal-stylesheets info)
    (if-format "\n%s\n" (plist-get info :html-head))
+   (org-reveal-stylesheets info)
    (org-reveal-mathjax-scripts info)
    (org-reveal--build-pre/postamble 'head-preamble info)
    "</head>\n<body>\n"

@@ -1,4 +1,4 @@
-#+TITLE:      Reveal.js Example
+#+TITLE:      Org-reveal Example
 #+DATE:       03/24/2014
 #+REVEAL_ROOT: ../
 #+REVEAL_THEME: default
@@ -6,11 +6,14 @@
 #+REVEAL_SPEED: fast
 #+REVEAL_TITLE_SLIDE_ATTR: data-background=ml-wordle.jpg
 #+REVEAL_TITLE_SLIDE_ATTR: style="background-color: rgba(1, 1, 1, 0.6)"
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Org-Reveal Introduction">
+#+REVEAL_POSTAMBLE: <p> Created by Zech Xu. </p>
 #+OPTIONS: reveal_touch:nil reveal_history:t
+#+OPTIONS: reveal_width:1200 reveal_height:800
 #+OPTIONS: reveal_autoslide:5000
 #+OPTIONS: reveal_hlevel:1
 #+OPTIONS: reveal_mathjax:t
-#+OPTIONS: num:nil toc:nil
+#+OPTIONS: num:nil toc:1
 #+HTML_HEAD: <style> body { background-size: 10%; background-image: url('ml-wordle.jpg'); background-position: left top; background-repeat: no-repeat; } </style>
 * key controls
   - Press 's' to show speaker notes
