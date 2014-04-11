@@ -101,7 +101,7 @@
     ...     print 'More'
   #+END_SRC
 * footnote examples
-  - The Org homepage[fn:1] now looks a lot better than it used to.
+  - The Org homepage[fn:1: The link is: http://orgmode.org] now looks a lot better than it used to.
 
   - Foot note example 2 [fn:2: This is the inline definition of this footnote].
 
@@ -134,8 +134,4 @@ img .right {
 <div style="float:center; width:60%; z-index=1000; display: block;">
   #+END_SRC
 * The END
-* Footnotes
-
-[fn:1] The link is: http://orgmode.org
-
 
