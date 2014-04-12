@@ -385,7 +385,7 @@
 
    Now break time, watch two videos:
 
-   #+REVEAL_HTML: <video width="400" height="300" controls> <source src="big-buck-bunny_trailer.webm" type="video/webm"> </video>
+   #+REVEAL_HTML: <video width="400" height="300" controls> <source src="images/big-buck-bunny_trailer.webm" type="video/webm"> </video>
    #+REVEAL_HTML: <iframe width="400" height="300" src="https://www.youtube.com/embed/BYQaD2CAi9A?list=PLx1H" frameborder="0" allowfullscreen></iframe>
 
 ** Speaker Notes
