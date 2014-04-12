@@ -78,9 +78,8 @@
     (:reveal-extra-js "REVEAL_EXTRA_JS" nil nil nil)
     (:reveal-title-slide-temp "REVEAL_TITLE_SLIDE_TEMP" nil org-reveal-title-slide-temp t)
     (:reveal-title-slide-attr "REVEAL_TITLE_SLIDE_ATTR" nil nil space)
-    (:reveal-preamble "REVEAL_PREAMBLE" nil org-reveal-preamble t)
-    (:reveal-head-preamble "REVEAL_HEAD_PREAMBLE" nil org-reveal-head-preamble newline)
-    (:reveal-postamble "REVEAL_POSTAMBLE" nil org-reveal-postamble t))
+    ;; REVEAL_HEAD is similar to HTML_HEAD
+    (:reveal-head "REVEAL_HEAD" nil org-reveal-head newline))
 
   :translate-alist
   '((export-block . org-reveal-export-block)
@@ -143,20 +142,11 @@ can be include."
 ;;   :group 'org-export-reveal
 ;;   :type 'string)
 
-(defcustom org-reveal-preamble nil
-  "Preamble contents."
-  :group 'org-export-reveal
-  :type 'string)
-
-(defcustom org-reveal-head-preamble nil
+(defcustom org-reveal-head nil
   "Preamble contents for head part."
   :group 'org-export-reveal
   :type 'string)
 
-(defcustom org-reveal-postamble nil
-  "Postamble contents."
-  :group 'org-export-reveal
-  :type 'string)
 
 (defun if-format (fmt val)
   (if val (format fmt val) ""))
@@ -311,7 +301,7 @@ using custom variable `org-reveal-root'."
     }
 
     .reveal section code {
-        border:1px outset grey;
+        border:2px outset grey;
     }
 
     /* change center alignment to left */
@@ -604,18 +594,6 @@ the plist used as a communication channel."
                            (org-export-read-attribute :attr_reveal paragraph :style))
                 contents)))))
 
-(defun org-reveal--build-pre/postamble (type info)
-  "Return document preamble or postamble as a string, or nil."
-  (let ((section (plist-get info (intern (format ":reveal-%s" type))))
-        (spec (org-html-format-spec info)))
-    (when section
-      (let ((section-contents
-             (if (functionp (intern section)) (funcall (intern section) info)
-               ;; else section is a string.
-               (format-spec section spec))))
-        (when (org-string-nw-p section-contents)
-          (org-element-normalize-string section-contents))))))
-
 
 (defun org-reveal-format-footnote-definition (n def)
   "Format the footnote definition numbered as N and defined as DEF.
@@ -720,9 +698,9 @@ info is a plist holding export options."
    (if (plist-get info :reveal-mathjax)
        (org-html--build-mathjax-config info))
    ;; (org-reveal-mathjax-scripts info)
-   (org-reveal--build-pre/postamble 'head-preamble info)
+   (if-format "\n%s\n" (plist-get info :reveal-head))
    "</head>\n<body>\n"
-   (org-reveal--build-pre/postamble 'preamble info)
+
    "<div class=\"reveal\">\n<div class=\"slides\">\n<section"
    (if-format " %s " (plist-get info :reveal-title-slide-attr))
    ">\n"
@@ -730,7 +708,6 @@ info is a plist holding export options."
    "</section>\n"
    contents
    "</div>\n</div>\n"
-   (org-reveal--build-pre/postamble 'postamble info)
    (org-reveal-scripts info)
    "</body>\n</html>\n"))
 
