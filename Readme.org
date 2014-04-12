@@ -15,9 +15,8 @@
 #+OPTIONS: reveal_width:1200 reveal_height:800
 #+OPTIONS: reveal_autoslide:5000
 #+OPTIONS: reveal_hlevel:2
-#+OPTIONS: reveal_mathjax:t
 #+OPTIONS: num:nil toc:1
-#+MATHJAX: scale:"133" align:"right" mathml:t path:"/tmp/MathJax/MathJax.js"
+#+HTML_MATHJAX: scale:"133" align:"right" path:"/tmp/MathJax/MathJax.js"
 * Reveal.js and Org-Reveal
 
   - *Reveal.js* is a tool for creating good-looking HTML presentations.
@@ -424,7 +423,6 @@
    * [[#my-heading][Heading]] with a =CUSTOM_ID= property.
 * To-do
   * aware of =::=
-  * mathjax
 * Acknowledgment
   Courtesy to:
   #+ATTR_REVEAL: :frag roll-in

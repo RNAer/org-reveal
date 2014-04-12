@@ -69,7 +69,7 @@
     ;; enable mathjax by default. To disable mathjax:
     ;; #+OPTIONS: reveal_mathjax:nil
     (:reveal-mathjax nil "reveal_mathjax" t t)
-    (:reveal-mathjax-url "REVEAL_MATHJAX_URL" nil org-reveal-mathjax-url t)
+    ;; (:reveal-mathjax-url "REVEAL_MATHJAX_URL" nil org-reveal-mathjax-url t)
     (:reveal-root "REVEAL_ROOT" nil org-reveal-root t)
     (:reveal-trans "REVEAL_TRANS" nil org-reveal-transition t)
     (:reveal-speed "REVEAL_SPEED" nil org-reveal-transition-speed t)
@@ -137,11 +137,11 @@ can be include."
   :group 'org-export-reveal
   :type 'string)
 
-(defcustom org-reveal-mathjax-url
-  "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-  "Default MathJax URL."
-  :group 'org-export-reveal
-  :type 'string)
+;; (defcustom org-reveal-mathjax-url
+;;   "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+;;   "Default MathJax URL."
+;;   :group 'org-export-reveal
+;;   :type 'string)
 
 (defcustom org-reveal-preamble nil
   "Preamble contents."
@@ -338,12 +338,12 @@ using custom variable `org-reveal-root'."
             zenburn-css-file
             pdf-css-file)))
 
-(defun org-reveal-mathjax-scripts (info)
-  "Return the HTML contents for declaring MathJax scripts"
-  (if (plist-get info :reveal-mathjax)
-      ;; MathJax enabled.
-      (format "<script type=\"text/javascript\" src=\"%s\"></script>\n"
-              (plist-get info :reveal-mathjax-url))))
+;; (defun org-reveal-mathjax-scripts (info)
+;;   "Return the HTML contents for declaring MathJax scripts"
+;;   (if (plist-get info :reveal-mathjax)
+;;       ;; MathJax enabled.
+;;       (format "<script type=\"text/javascript\" src=\"%s\"></script>\n"
+;;               (plist-get info :reveal-mathjax-url))))
 
 (defun org-reveal-scripts (info)
   "Return the necessary scripts for initializing reveal.js using
@@ -717,7 +717,9 @@ info is a plist holding export options."
    (if-format "<meta name=\"keywords\" content=\"%s\"/>\n" (plist-get info :keywords))
    (if-format "\n%s\n" (plist-get info :html-head))
    (org-reveal-stylesheets info)
-   (org-reveal-mathjax-scripts info)
+   (if (plist-get info :reveal-mathjax)
+       (org-html--build-mathjax-config info))
+   ;; (org-reveal-mathjax-scripts info)
    (org-reveal--build-pre/postamble 'head-preamble info)
    "</head>\n<body>\n"
    (org-reveal--build-pre/postamble 'preamble info)
