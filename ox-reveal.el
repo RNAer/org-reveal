@@ -38,7 +38,10 @@
         (?B "To file and Browse" org-reveal-export-to-html-and-browse)))
 
   :options-alist
-  '(;; Display controls in the bottom right corner
+  '(;; other text for title slide;
+    ;; each "#+OTHER" line will be a line in title slide
+    (:other  "OTHER" nil nil newline)
+    ;; Display controls in the bottom right corner
     (:reveal-control nil "reveal_control" t t)
     ;; Display a presentation progress bar
     (:reveal-progress nil "reveal_progress" t t)
@@ -73,6 +76,7 @@
     (:reveal-theme "REVEAL_THEME" nil org-reveal-theme t)
     (:reveal-extra-css "REVEAL_EXTRA_CSS" nil nil nil)
     (:reveal-extra-js "REVEAL_EXTRA_JS" nil nil nil)
+    ;; template for title slide
     (:reveal-title-slide-temp "REVEAL_TITLE_SLIDE_TEMP" nil org-reveal-title-slide-temp t)
     (:reveal-title-slide-attr "REVEAL_TITLE_SLIDE_ATTR" nil nil space)
     ;; REVEAL_HEAD is similar to HTML_HEAD
@@ -686,6 +690,10 @@ info is a plist holding export options."
    (if-format " %s " (plist-get info :reveal-title-slide-attr))
    ">\n"
    (format-spec (plist-get info :reveal-title-slide-temp) (org-html-format-spec info))
+   (if-format " <h3>%s </h3>"
+	      (mapconcat 'identity
+			 (split-string (plist-get info :other) "\n")
+			 "</h3><h3>"))
    "</section>\n"
    contents
    "</div>\n</div>\n"
