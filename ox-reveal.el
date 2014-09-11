@@ -1,9 +1,7 @@
 ;;; ox-reveal.el --- reveal.js Presentation Back-End for Org Export Engine
 
-;; Copyright (C) 2013 Yujie Wen
-
-;; Author: Yujie Wen <yjwen.ty at gmail dot com>
-;; Created: 2013-04-27
+;; Author: Yujie Wen & Zech Xu
+;; Created: 2014-04-27
 ;; Version: 1.0
 ;; Package-Requires: ((org "8.0"))
 ;; Keywords: outlines, hypermedia, slideshow, presentation
@@ -69,7 +67,6 @@
     ;; enable mathjax by default. To disable mathjax:
     ;; #+OPTIONS: reveal_mathjax:nil
     (:reveal-mathjax nil "reveal_mathjax" t t)
-    ;; (:reveal-mathjax-url "REVEAL_MATHJAX_URL" nil org-reveal-mathjax-url t)
     (:reveal-root "REVEAL_ROOT" nil org-reveal-root t)
     (:reveal-trans "REVEAL_TRANS" nil org-reveal-transition t)
     (:reveal-speed "REVEAL_SPEED" nil org-reveal-transition-speed t)
@@ -136,20 +133,11 @@ can be include."
   :group 'org-export-reveal
   :type 'string)
 
-;; (defcustom org-reveal-mathjax-url
-;;   "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-;;   "Default MathJax URL."
-;;   :group 'org-export-reveal
-;;   :type 'string)
-
 (defcustom org-reveal-head nil
   "Preamble contents for head part."
   :group 'org-export-reveal
   :type 'string)
 
-
-(defun if-format (fmt val)
-  (if val (format fmt val) ""))
 
 (defun frag-class (frag)
   "Return proper HTML string description of fragment style of the slide."
@@ -328,12 +316,6 @@ using custom variable `org-reveal-root'."
             zenburn-css-file
             pdf-css-file)))
 
-;; (defun org-reveal-mathjax-scripts (info)
-;;   "Return the HTML contents for declaring MathJax scripts"
-;;   (if (plist-get info :reveal-mathjax)
-;;       ;; MathJax enabled.
-;;       (format "<script type=\"text/javascript\" src=\"%s\"></script>\n"
-;;               (plist-get info :reveal-mathjax-url))))
 
 (defun org-reveal-scripts (info)
   "Return the necessary scripts for initializing reveal.js using
@@ -697,7 +679,6 @@ info is a plist holding export options."
    (org-reveal-stylesheets info)
    (if (plist-get info :reveal-mathjax)
        (org-html--build-mathjax-config info))
-   ;; (org-reveal-mathjax-scripts info)
    (if-format "\n%s\n" (plist-get info :reveal-head))
    "</head>\n<body>\n"
 
