@@ -1,25 +1,36 @@
 #+Title:  Introduction to Org-Reveal
 #+Author: Yujie Wen & Zech Xu
-#+DATE:   03/24/2014
+#+DATE:   [2015-04-04 Sat]
 #+KEYWORDS: org-mode emacs reveal.js
-#+REVEAL_ROOT: ../
-#+REVEAL_THEME: default
+#+REVEAL_THEME: black
 #+REVEAL_TRANS: concave
 #+REVEAL_SPEED: fast
 #+REVEAL_TITLE_SLIDE_ATTR: data-background=images/whale.jpg
 #+REVEAL_TITLE_SLIDE_ATTR: style="background-color: rgba(1, 1, 1, 0.6)"
 #+REVEAL_HEAD: <style> body { background-image: url('images/header.jpg'); background-position: top; background-repeat: no-repeat; } </style>
 #+OPTIONS: reveal_touch:nil reveal_history:t
-#+OPTIONS: reveal_width:1200 reveal_height:800
+#+OPTIONS: reveal_width:1920 reveal_height:1080
 #+OPTIONS: reveal_autoslide:5000
+#+OPTIONS: reveal_min_scale:0.2
+#+OPTIONS: reveal_max_scale:1.5
 #+OPTIONS: reveal_hlevel:2
 #+OPTIONS: num:nil toc:1
 #+HTML_HEAD: <meta name="description" content="Org-Reveal Introduction">
-#+HTML_MATHJAX: scale:"133" align:"right" path:"../../MathJax/MathJax.js"
-* Introduction
-  This repository is forked from [[https://github.com/yjwen/org-reveal][Yujie Wen]] (thanks!)
+#+HTML_MATHJAX: scale:"133" align:"right"
 
-  Besides some minor code formating, the big changes from original repo include:
+* Reveal.js and Org-Reveal
+  - *Reveal.js* is a tool for creating good-looking HTML presentations.
+    See https://github.com/hakimel/reveal.js/. \\
+    For an example of reveal.js presentation, click [[http://lab.hakim.se/reveal-js/#/][here]].
+  - *Org-Reveal* exports your [[http://orgmode.org][Org]] documents to reveal.js presentations.\\
+    With Org-reveal, you can create beautiful presentations with 3D
+    effects from simple but powerful Org contents.
+
+* Repository
+  This repository is modified from [[https://github.com/yjwen/org-reveal][Yujie Wen's repo]] (thanks!)
+
+  Besides some minor code formating, the changes include:
+
   - changed some variable settings. Some variables are removed from global customization.
   - removed =reveal_postamble= and =reveal_preamble=. It seems useless to me and reveal.js does not handle them very well.
   - added functionality to set attributes for the title slide.
@@ -28,16 +39,7 @@
   - changed original mathjax related code for utilizing the mathjax code in =ox-html.el=. This has 2 advantages:
     1) reduce code redundancy
     2) the same document can be exported both to html or reveal.js without changes
-  - other small changes.
-
-* Reveal.js and Org-Reveal
-  - *Reveal.js* is a tool for creating good-looking HTML presentations.
-    See https://github.com/hakimel/reveal.js/. \\
-    For an example of reveal.js presentation, click [[http://lab.hakim.se/reveal-js/#/][here]].
-  - *Org-Reveal* exports your [[orgmode.org][Org]] documents to reveal.js
-    presentations.\\
-    With Org-reveal, you can create beautiful presentations with 3D
-    effects from simple but powerful Org contents.
+  - other minor changes.
 
 * Requirements and Installation
   - Reveal.js.
@@ -51,8 +53,12 @@
    - If you do not wish you download reveal.js and want to use a CDN version, see the section _Set the location of Reveal.js_
 
 ** Obtain org-mode
-   - Org-reveal relies on the Org-mode 8.0 export frame work. Pre-packaged org-mode may be out-of-date.
+   - Org-reveal relies on the Org-mode export frame work. Pre-packaged org-mode may be out-of-date has not been tested.
    - If not sure, use the latest development codes from git repository.
+
+     You can install it in Emacs with =M-x package-install= and then type =org=.
+
+     Or get it from github:
      #+BEGIN_SRC sh
        git clone git://orgmode.org/org-mode.git
      #+END_SRC
@@ -68,7 +74,6 @@
      #+BEGIN_SRC lisp
        (require 'ox-reveal)
      #+END_SRC
-   - Or you can install it with =package=.
 
 * Configuration and Usage
   You can export this file with =C-c C-e R R= to see the effects of following config. Before that, make sure the path settings at the head of the file is right for you.
@@ -89,23 +94,14 @@
    globally. For example, add the following statement to your .emacs
    file:
    #+BEGIN_SRC lisp
-     (setq org-reveal-root "file:///d:/reveal.js")
+     (setq org-reveal-root "/Users/zech/Dropbox/git/reveal.js")
    #+END_SRC
-   *IMPORTANT*: the absolute path to Reveal.js should be in URL form,
-   "file:///path_to_reveal.js", as illustrated above.
 
    By setting option =REVEAL_ROOT=, the location is only affected
    within the Org file.
 
    #+BEGIN_SRC org
-     #+REVEAL_ROOT: file:///d:/reveal.js
-   #+END_SRC
-
-   Set your =REVEAL_ROOT= to the following URL, to use reveal.js from
-   a CDN, instead of downloading your local copy.
-
-   #+BEGIN_SRC org
-     #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/2.5.0/
+     #+REVEAL_ROOT: /Users/zech/Dropbox/git/reveal.js
    #+END_SRC
 
 ** First Try
@@ -127,7 +123,7 @@
    horizontally, deeper headings are mapped to vertical slides below its
    parent level 1 heading.
 
-*** HLevel's Affects on Slides Layout
+*** HLevel's effects on Slides Layout
     Assume we have a simple Org file as below:
     #+BEGIN_SRC org
       * H1
@@ -151,7 +147,7 @@
 *** Configure HLevel's Value
     * Setting Org files local HLevel using =#+OPTIONS= tag =reveal_hlevel=.
       #+BEGIN_SRC org
-        #+OPTIONS: reveal_hlevel:2
+	#+OPTIONS: reveal_hlevel:2
       #+END_SRC
 
 ** Force Split
@@ -166,15 +162,14 @@
 
    Now a new slide begins after =#+REVEAL: split= keyword.
 
-** Select Theme and Transition
+** Select Theme and Transition Style and Speed
     Themes and transition styles are set globally throughout the whole
-    file by setting options =REVEAL_THEME=, =REVEAL_TRANS=, and =REVEAL_SPEED=.
+    file by setting options =REVEAL_THEME=, =REVEAL_TRANS=, and =REVEAL_SPEED=
+    in your org-mode file.
 
     For an example, please check the heading part of this document.
 
-    Available themes can be found in =css/theme/= in the reveal.js directory.
-
-    Available transitions are: =default=, =cube=, =page=, =concave=, =zoom=, =linear=, =fade=, =none=.
+    Please check reveal.js documentation for available themes and transition styles.
 
 ** Slide Size
    Reveal.js scales slides to best fit the display resolution. But in case
@@ -191,9 +186,18 @@
 ** Slide Numbering
    Enabled by default. To deactivate slide numbers:
    #+BEGIN_SRC org
-     #+OPTIONS: reveal-slide-number:nil
+     #+OPTIONS: reveal_slide_number:nil
+   #+END_SRC
+** Slide of outline
+   The following setting only shows the outermost headline.
+   #+BEGIN_SRC org
+     #+OPTIONS: toc:1
    #+END_SRC
 
+   You can disable it with:
+   #+BEGIN_SRC org
+     #+OPTIONS: toc:nil
+   #+END_SRC
 ** Disable Heading Numbers
    To remove the section numbers on titles of slides (default):
    #+BEGIN_SRC org
@@ -204,10 +208,10 @@
    Reveal.js provides other capabilities to configure slides.
 
    They can be turned on/off by setting =#+OPTIONS= tags to =nil= or =t=:
-   - =reveal-control= : Show/hide browsing control pad.
-   - =reveal-progress= : Show/hide progress bar.
-   - =reveal-history= : Enable/disable slide history track.
-   - =reveal-center= : Enable/disable vertical centering of slide.
+   - =reveal_control= : Show/hide browsing control pad.
+   - =reveal_progress= : Show/hide progress bar.
+   - =reveal_history= : Enable/disable slide history track.
+   - =reveal_center= : Enable/disable vertical centering of slide.
    - =reveal_keyboard= : Enable/disable keyboard navigation.
    - =reveal_overview= : Enable/disable thumbnail overview.
 
@@ -253,9 +257,9 @@
 
     #+BEGIN_SRC org
       *** Single Colored Background
-          :PROPERTIES:
-          :reveal_background: #543210
-          :END:
+	  :PROPERTIES:
+	  :reveal_background: #543210
+	  :END:
     #+END_SRC
 
 *** Single Image Background
@@ -269,10 +273,10 @@
     sliding rather than fading.
     #+BEGIN_SRC org
     *** Single Image Background
-        :PROPERTIES:
-        :reveal_background: images/whale.jpg
-        :reveal_background_trans: slide
-        :END:
+	:PROPERTIES:
+	:reveal_background: images/whale.jpg
+	:reveal_background_trans: slide
+	:END:
     #+END_SRC
 
 *** Repeating Image Background
@@ -288,11 +292,11 @@
     image on the background.
     #+BEGIN_SRC org
     *** Repeating Image Background
-        :PROPERTIES:
-        :reveal_background: images/whale.jpg
-        :reveal_background_size: 400px
-        :reveal_background_repeat: repeat
-        :END:
+	:PROPERTIES:
+	:reveal_background: images/whale.jpg
+	:reveal_background_size: 400px
+	:reveal_background_repeat: repeat
+	:END:
     #+END_SRC
 
 ** Set Extra Individual Slide Attribute
@@ -301,16 +305,16 @@
 
 ** Set Data State for Individual Slide
    :PROPERTIES:
-   :reveal_data_state: alert
+   :reveal_data_state: custemevent
    :END:
 
    Set property =reveal_data_state= to headings to change this slide's
    display style, as illustrated here:
    #+BEGIN_SRC org
      ** Data State
-        :PROPERTIES:
-        :reveal_data_state: alert
-        :END:
+	:PROPERTIES:
+	:reveal_data_state: custemevent
+	:END:
    #+END_SRC
    Availabe data states are: =alert=, =blackout=, =soothe=.
 ** Footnote
@@ -350,10 +354,10 @@
    *IMPORTANT*: Displaying equations requires internet connection to
    [[mathjax.org]] or local MathJax installation.
 
-   *IMPORTANT*: To reduce internet traffic. Set =#+OPTIONS= tag =reveal_mathjax= to =nil= MathJax is disable the mathjax rendering.
-   For local MathJax installation, set option =HTML_MATHJAX= to locate the URL
-   pointing to the local MathJax location. (see head of this file).
+   *IMPORTANT*: For local MathJax installation, set option =HTML_MATHJAX= to locate the URL
+   pointing to the local MathJax location. Search org-mode documentation for details.
 
+   You can set =#+OPTIONS= tag =reveal_mathjax= to =nil= MathJax to disable the mathjax rendering.
 ** Preamble and Postamble					    :ARCHIVE:
 
    You can define preamble and postamble contents which will not be
@@ -385,8 +389,8 @@
 
    Now break time, watch two videos:
 
-   #+REVEAL_HTML: <video width="400" height="300" controls> <source src="images/big-buck-bunny_trailer.webm" type="video/webm"> </video>
-   #+REVEAL_HTML: <iframe width="400" height="300" src="https://www.youtube.com/embed/BYQaD2CAi9A?list=PLx1H" frameborder="0" allowfullscreen></iframe>
+   #+REVEAL_HTML: <video width="400" height="300" controls> <source src="images/big_buck_bunny.mp4" type="video/mp4"> </video>
+   #+REVEAL_HTML: <iframe width="400" height="300" src="https://www.youtube.com/embed/BYQaD2CAi9A" frameborder="0" allowfullscreen></iframe>
 
 ** Speaker Notes
    Reveal.js supports speaker notes, which are displayed in a seperate
@@ -403,10 +407,10 @@
     * Heading 1
       Some contents.
       ,#+BEGIN_NOTES
-        Enter speaker notes here.
+	Enter speaker notes here.
       ,#+END_NOTES
    #+END_SRC
-      
+
 #+REVEAL: split
 
    Due to a bug in Reveal.js, sometimes the speaker notes window

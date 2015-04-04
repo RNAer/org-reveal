@@ -105,8 +105,9 @@
 
 
 (defcustom org-reveal-root ""
-  "The root directory of reveal.js packages. It is the directory
-  within which js/reveal.min.js is."
+  "The root directory of reveal.js packages.
+It is the directory within which js/reveal.min.js is.
+Default is empty string, i.e., current directory."
   :group 'org-export-reveal
   :type 'string)
 
