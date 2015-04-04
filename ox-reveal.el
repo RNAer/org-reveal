@@ -528,21 +528,15 @@ contextual information."
     (org-reveal-format-list-item
      contents type checkbox info (or tag counter) frag)))
 
-(defun org-reveal-parse-token (key &optional value)
-  "Return HTML tags or perform SIDE EFFECT according to key"
-  (case (intern key)
-    (split "</section>\n<section>")))
+(defun org-reveal-parse-value (value &optional token)
+  "Return HTML tags or perform SIDE EFFECT according to key.
 
-(defun org-reveal-parse-keyword-value (value)
-  "According to the value content, return HTML tags to split slides."
-  (let ((tokens (mapcar
-		 (lambda (x) (split-string x ":"))
-		 (split-string value))))
-    (mapconcat
-     (lambda (x) (apply 'org-reveal-parse-token x))
-     tokens
-     "")))
-
+Currently it only used to split a slide into 2 by inserting:
+#+REVEAL_HTML: SPLIT
+in the middle of the slide content."
+  (pcase value
+    ("SPLIT" "</section>\n<section>")
+    (OTHER  OTHER)))
 
 (defun org-reveal-keyword (keyword contents info)
   "Transcode a KEYWORD element from Org to HTML,
@@ -551,8 +545,7 @@ CONTENTS is nil. INFO is a plist holding contextual information."
   (let ((key (org-element-property :key keyword))
 	(value (org-element-property :value keyword)))
     (case (intern key)
-      (REVEAL (org-reveal-parse-keyword-value value))
-      (REVEAL_HTML value))))
+      (REVEAL_HTML (org-reveal-parse-value value)))))
 
 (defun org-reveal-paragraph (paragraph contents info)
   "Transcode a PARAGRAPH element from Org to Reveal HTML.
