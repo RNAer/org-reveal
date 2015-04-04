@@ -40,7 +40,8 @@
   :options-alist
   '(;; other text for title slide;
     ;; each "#+OTHER" line will be a line in title slide
-    (:other  "OTHER" nil nil newline)
+    ;; default is empty
+    (:other  "OTHER" nil "" newline)
     ;; Display controls in the bottom right corner
     (:reveal-control nil "reveal_control" t t)
     ;; Display a presentation progress bar
@@ -74,6 +75,7 @@
     (:reveal-trans "REVEAL_TRANS" nil org-reveal-transition t)
     (:reveal-speed "REVEAL_SPEED" nil org-reveal-transition-speed t)
     (:reveal-theme "REVEAL_THEME" nil org-reveal-theme t)
+    ;; extra CSS and js.
     (:reveal-extra-css "REVEAL_EXTRA_CSS" nil nil nil)
     (:reveal-extra-js "REVEAL_EXTRA_JS" nil nil nil)
     ;; template for title slide
@@ -132,7 +134,7 @@ can be include."
   :group 'org-export-reveal
   :type 'string)
 
-(defcustom org-reveal-theme "default"
+(defcustom org-reveal-theme "black"
   "Reveal theme."
   :group 'org-export-reveal
   :type 'string)
@@ -270,7 +272,7 @@ holding contextual information."
 using custom variable `org-reveal-root'."
   (let* ((root-dir (plist-get info :reveal-root))
 	 (css-dir (concat (file-name-as-directory root-dir) "css"))
-	 (min-css-file (concat (file-name-as-directory css-dir) "reveal.min.css"))
+	 (min-css-file (concat (file-name-as-directory css-dir) "reveal.css"))
 	 (theme-dir (concat (file-name-as-directory css-dir) "theme"))
 	 (theme-file (concat (file-name-as-directory theme-dir)
 			     (format "%s.css" (plist-get info :reveal-theme))))
@@ -284,7 +286,7 @@ using custom variable `org-reveal-root'."
 <link rel=\"stylesheet\" href=\"%s\" id=\"theme\"/>
 <link rel=\"stylesheet\" href=\"%s\" id=\"extra\"/>
 
-<!-- For syntax highlighting -->
+<!-- For code syntax highlighting -->
 <link rel=\"stylesheet\" href=\"%s\">
 
 <!-- For specific styles: footnote and code -->
@@ -307,18 +309,16 @@ using custom variable `org-reveal-root'."
 
 <!-- For PDF export: URL?print-pdf#/ -->
 <script>
-    if( window.location.search.match( /print-pdf/gi ) ) {
-	var link = document.createElement( 'link' );
-	link.rel = 'stylesheet';
-	link.type = 'text/css';
-	link.href = '%s';
-	document.getElementsByTagName( 'head' )[0].appendChild( link );
-    }
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
 </script>
 "
 	    min-css-file
 	    theme-file
-	    extra-css-file
+	    (if extra-css-file extra-css-file "")
 	    zenburn-css-file
 	    pdf-css-file)))
 
@@ -681,6 +681,8 @@ info is a plist holding export options."
    (if-format "<meta name=\"author\" content=\"%s\"/>\n" (org-export-data (plist-get info :author) info))
    (if-format "<meta name=\"description\" content=\"%s\"/>\n" (plist-get info :description))
    (if-format "<meta name=\"keywords\" content=\"%s\"/>\n" (plist-get info :keywords))
+   "\n<meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n"
+   "\n<meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\" />\n"
    (if-format "\n%s\n" (plist-get info :html-head))
    (org-reveal-stylesheets info)
    (if (plist-get info :reveal-mathjax)
