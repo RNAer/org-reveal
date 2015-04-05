@@ -1,5 +1,5 @@
 #+Title:  Introduction to Org-Reveal
-#+Author: Yujie Wen & Zech Xu
+#+Author: Zech Xu
 #+DATE:   [2015-04-04 Sat]
 #+KEYWORDS: org-mode emacs reveal.js
 #+REVEAL_THEME: black
