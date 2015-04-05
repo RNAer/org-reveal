@@ -65,15 +65,15 @@
     (:reveal-hlevel nil "reveal_hlevel"  1 t)
     (:reveal-width  nil "reveal_width"  -1 t) ; slide width
     (:reveal-height nil "reveal_height" -1 t) ; slide height
-    (:reveal-margin nil "reveal_margin" -1 t) ; slide margin
     ;; (:reveal-min-scale nil "reveal_min_scale" -1 t)
     ;; (:reveal-max-scale nil "reveal_max_scale" -1 t)
     ;; enable mathjax by default. To disable mathjax:
     ;; #+OPTIONS: reveal_mathjax:nil
     (:reveal-mathjax nil "reveal_mathjax" t t)
     (:reveal-root "REVEAL_ROOT" nil org-reveal-root t)
-    (:reveal-max-scale "REVEAL_MAX_SCALE" nil -1 t)
-    (:reveal-min-scale "REVEAL_MIN_SCALE" nil -1 t)
+    (:reveal-margin "REVEAL_MARGIN" nil "-1" t) ; slide margin
+    (:reveal-max-scale "REVEAL_MAX_SCALE" nil "-1" t)
+    (:reveal-min-scale "REVEAL_MIN_SCALE" nil "-1" t)
     (:reveal-trans "REVEAL_TRANS" nil org-reveal-transition t)
     (:reveal-speed "REVEAL_SPEED" nil org-reveal-transition-speed t)
     (:reveal-theme "REVEAL_THEME" nil org-reveal-theme t)
@@ -281,9 +281,7 @@ using custom variable `org-reveal-root'."
 			     (format "%s.css" (plist-get info :reveal-theme))))
 	 (extra-css-file (plist-get info :reveal-extra-css))
 	 (lib-css-path (mapconcat 'file-name-as-directory `(,root-dir "lib" "css") ""))
-	 (zenburn-css-file (concat lib-css-path "zenburn.css"))
-	 (pdf-css-dir (concat (file-name-as-directory css-dir) "print"))
-	 (pdf-css-file (concat (file-name-as-directory pdf-css-dir) "pdf.css")))
+	 (zenburn-css-file (concat lib-css-path "zenburn.css")))
     (format "
 <link rel=\"stylesheet\" href=\"%s\"/>
 <link rel=\"stylesheet\" href=\"%s\" id=\"theme\"/>
@@ -315,7 +313,7 @@ using custom variable `org-reveal-root'."
     var link = document.createElement( 'link' );
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '%s/css/print/pdf.css' : '%s/css/print/paper.css';
     document.getElementsByTagName( 'head' )[0].appendChild( link );
 </script>
 "
@@ -323,7 +321,8 @@ using custom variable `org-reveal-root'."
 	    theme-file
 	    (if extra-css-file extra-css-file "")
 	    zenburn-css-file
-	    pdf-css-file)))
+	    root-dir
+	    root-dir)))
 
 
 (defun org-reveal-scripts (info)
@@ -369,7 +368,7 @@ custom variable `org-reveal-root'."
 	     (if (plist-get info :reveal-overview) "true" "false")
 	     (let ((width (plist-get info :reveal-width))
 		   (height (plist-get info :reveal-height))
-		   (margin (plist-get info :reveal-margin))
+		   (margin (string-to-number (plist-get info :reveal-margin)))
 		   (min-scale (string-to-number (plist-get info :reveal-min-scale)))
 		   (max-scale (string-to-number (plist-get info :reveal-max-scale))))
 	       (concat
