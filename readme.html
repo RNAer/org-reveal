@@ -43,7 +43,7 @@
     var link = document.createElement( 'link' );
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '/Users/zech/Dropbox/git/reveal.js/css/print/pdf.css' : '/Users/zech/Dropbox/git/reveal.js/css/print/paper.css';
     document.getElementsByTagName( 'head' )[0].appendChild( link );
 </script>
 <script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
@@ -525,10 +525,24 @@ To remove the section numbers on titles of slides (default):
 </pre>
 </div>
 </section>
-
 </section>
 <section>
 <section id="sec-4-10" >
+
+<h3>Set low-level headlines as list rather than slides</h3>
+<p >
+If you set like following, all headlines lower than level 3 will be exported as list item
+instead of stand alone slides.
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-org"><span style="color: #73d216;">#+OPTIONS: H:3</span>
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="sec-4-11" >
 
 <h3>Other Misc Settings on the Presentation</h3>
 <p >
@@ -560,7 +574,7 @@ For an example, please refer to the heading part of this file.
 
 </section>
 <section>
-<section id="sec-4-11" >
+<section id="sec-4-12" >
 
 <h3>Fragmented Contents</h3>
 <p >
@@ -611,7 +625,7 @@ Availabe fragment styles are:
 
 </section>
 <section>
-<section id="sec-4-12" >
+<section id="sec-4-13" >
 
 <h3>Set Individual Slide Background</h3>
 <p >
@@ -620,7 +634,7 @@ array by setting heading properties.
 </p>
 
 </section>
-<section id="sec-4-12-1"  data-background="#543210">
+<section id="sec-4-13-1"  data-background="#543210">
 
 <h4>Single Colored Background</h4>
 
@@ -639,7 +653,7 @@ supported CSS color format.
 </div>
 
 </section>
-<section id="sec-4-12-2"  data-background="images/whale.jpg" data-background-transition="slide">
+<section id="sec-4-13-2"  data-background="images/whale.jpg" data-background-transition="slide">
 
 <h4>Single Image Background</h4>
 
@@ -659,7 +673,7 @@ sliding rather than fading.
 </div>
 
 </section>
-<section id="sec-4-12-3"  data-background="images/whale.jpg" data-background-size="400px" data-background-repeat="repeat">
+<section id="sec-4-13-3"  data-background="images/whale.jpg" data-background-size="400px" data-background-repeat="repeat">
 
 <h4>Repeating Image Background</h4>
 
@@ -685,7 +699,7 @@ image on the background.
 
 </section>
 <section>
-<section id="sec-4-13"  style="background-color:green; font-size:99px">
+<section id="sec-4-14"  style="background-color:green; font-size:99px">
 
 <h3>Set Extra Individual Slide Attribute</h3>
 
@@ -702,7 +716,7 @@ this very slide.
 
 </section>
 <section>
-<section id="sec-4-14"  data-state="custemevent">
+<section id="sec-4-15"  data-state="custemevent">
 
 <h3>Set Data State for Individual Slide</h3>
 
@@ -724,7 +738,7 @@ display style, as illustrated here:
 </section>
 </section>
 <section>
-<section id="sec-4-15" >
+<section id="sec-4-16" >
 
 <h3>Footnote</h3>
 <p >
@@ -744,7 +758,7 @@ This is great for listing citations on the slide.
 </section>
 </section>
 <section>
-<section id="sec-4-16" >
+<section id="sec-4-17" >
 
 <h3>Source Codes</h3>
 <p >
@@ -801,7 +815,7 @@ You can set <code>#+OPTIONS</code> tag <code>reveal_mathjax</code> to <code>nil<
 </section>
 </section>
 <section>
-<section id="sec-4-18" >
+<section id="sec-4-19" >
 
 <h3>Raw HTML in Slides</h3>
 <p >
@@ -820,11 +834,11 @@ Now break time, watch two videos:
 <p >
 or embed a webpage inside a slide:
 </p>
-<object data=/Users/zech/ms_forensic/beta_hand/hellinger_emperor_pcoa_plot_2/index.html width="1600" height="900"> <embed src=/Users/zech/ms_forensic/beta_hand/hellinger_emperor_pcoa_plot_2/index.html width="1600" height="900"> </embed></object>
+<object data="http://emperor.colorado.edu/master/make_emperor/emperor_output/index.html" type="text/html" width="1600" height="900"> <a href="http://emperor.colorado.edu/master/make_emperor/emperor_output/index.html"> Emperor PCoA plot </a> failed to load...</p> </object>
 </section>
 </section>
 <section>
-<section id="sec-4-19" >
+<section id="sec-4-20" >
 
 <h3>Speaker Notes</h3>
 <p >
@@ -871,7 +885,7 @@ for this. See reveal.js documentation for details.
 
 </section>
 <section>
-<section id="sec-4-20" >
+<section id="sec-4-21" >
 
 <h3>Extra Stylesheets and Javascripts</h3>
 <p >
@@ -897,7 +911,7 @@ script if necessary:
 
 </section>
 <section>
-<section id="sec-4-21" >
+<section id="sec-4-22" >
 
 <h3>Internal Links - jumping between slides</h3>
 <p >
@@ -906,7 +920,7 @@ custom-id, as the examples below:
 </p>
 
 <ul class="org-ul">
-<li>jump to <a href="#sec-4-19">Speaker Notes</a>: currently links to headline text does work properly.
+<li>jump to <a href="#sec-4-20">Speaker Notes</a>: currently links to headline text does work properly.
 </li>
 <li><a href="#heading-of-mj">jump to MathJax</a>: link to the headings with the specified <code>CUSTOM_ID</code> property.
 </li>
@@ -915,7 +929,7 @@ custom-id, as the examples below:
 
 </section>
 <section>
-<section id="sec-4-22" >
+<section id="sec-4-23" >
 
 <h3>Org Table</h3>
 <p >
@@ -955,7 +969,7 @@ An example of how a table is exported in org-reveal:
 </section>
 </section>
 <section>
-<section id="sec-4-23" >
+<section id="sec-4-24" >
 
 <h3>Checkbox on Org List</h3>
 <p >

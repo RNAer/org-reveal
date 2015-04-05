@@ -302,9 +302,9 @@ using custom variable `org-reveal-root'."
     }
 
     /* change center alignment to left */
-    .reveal section p {
-	text-align: left;
-    }
+    /* .reveal section p {  */
+    /*    text-align: left;  */
+    /* }  */
 
 </style>
 

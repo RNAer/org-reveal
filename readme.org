@@ -14,7 +14,7 @@
 #+OPTIONS: reveal_width:1920 reveal_height:1080
 #+OPTIONS: reveal_autoslide:5000
 #+OPTIONS: reveal_hlevel:2
-#+OPTIONS: num:nil toc:1
+#+OPTIONS: num:nil toc:1 H:3
 #+HTML_HEAD: <meta name="description" content="Org-Reveal Introduction">
 #+HTML_MATHJAX: scale:"133" align:"right"
 
@@ -203,7 +203,12 @@
    #+BEGIN_SRC org
      #+OPTIONS: num:nil
    #+END_SRC
-
+** Set low-level headlines as list rather than slides
+   If you set like following, all headlines lower than level 3 will be exported as list item
+   instead of stand alone slides.
+   #+BEGIN_SRC org
+     #+OPTIONS: H:3
+   #+END_SRC
 ** Other Misc Settings on the Presentation
    Reveal.js provides other capabilities to configure slides.
 
@@ -375,7 +380,7 @@
    #+REVEAL_HTML: <iframe width="400" height="300" src="https://www.youtube.com/embed/BYQaD2CAi9A" frameborder="0" allowfullscreen></iframe>
    #+REVEAL_HTML: SPLIT
    or embed a webpage inside a slide:
-   #+REVEAL_HTML: <object data=/Users/zech/ms_forensic/beta_hand/hellinger_emperor_pcoa_plot_2/index.html width="1600" height="900"> <embed src=/Users/zech/ms_forensic/beta_hand/hellinger_emperor_pcoa_plot_2/index.html width="1600" height="900"> </embed></object>
+   #+REVEAL_HTML: <object data="http://emperor.colorado.edu/master/make_emperor/emperor_output/index.html" type="text/html" width="1600" height="900"> <a href="http://emperor.colorado.edu/master/make_emperor/emperor_output/index.html"> Emperor PCoA plot </a> failed to load...</p> </object>
 ** Speaker Notes
    Reveal.js supports speaker notes, which are displayed in a seperate
    browser window. Press 's' on slide windows will pop up an window
