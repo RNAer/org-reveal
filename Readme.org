@@ -5,14 +5,14 @@
 #+REVEAL_THEME: black
 #+REVEAL_TRANS: concave
 #+REVEAL_SPEED: fast
+#+REVEAL_MIN_SCALE: 0.2
+#+REVEAL_MAX_SCALE: 1.5
 #+REVEAL_TITLE_SLIDE_ATTR: data-background=images/whale.jpg
 #+REVEAL_TITLE_SLIDE_ATTR: style="background-color: rgba(1, 1, 1, 0.6)"
 #+REVEAL_HEAD: <style> body { background-image: url('images/header.jpg'); background-position: top; background-repeat: no-repeat; } </style>
 #+OPTIONS: reveal_touch:nil reveal_history:t
 #+OPTIONS: reveal_width:1920 reveal_height:1080
 #+OPTIONS: reveal_autoslide:5000
-#+OPTIONS: reveal_min_scale:0.2
-#+OPTIONS: reveal_max_scale:1.5
 #+OPTIONS: reveal_hlevel:2
 #+OPTIONS: num:nil toc:1
 #+HTML_HEAD: <meta name="description" content="Org-Reveal Introduction">
@@ -155,12 +155,12 @@
    split the contents into multiple vertical slides manually, by inserting
 
    #+BEGIN_SRC org
-     #+REVEAL: split
+     #+REVEAL_HTML: SPLIT
    #+END_SRC
 
-#+REVEAL: split
+#+REVEAL_HTML: SPLIT
 
-   Now a new slide begins after =#+REVEAL: split= keyword.
+   Now a new slide begins after =#+REVEAL_HTML: SPLIT= keyword.
 
 ** Select Theme and Transition Style and Speed
     Themes and transition styles are set globally throughout the whole
@@ -249,59 +249,66 @@
 
 *** Single Colored Background
    :PROPERTIES:
-   :reveal_background: #543210
+   :reveal_data_bg: #543210
    :END:
 
-    Set property =reveal_background= to either an RGB color value, or any
+    Set property =reveal_data_bg= to either an RGB color value, or any
     supported CSS color format.
 
     #+BEGIN_SRC org
       *** Single Colored Background
 	  :PROPERTIES:
-	  :reveal_background: #543210
+	  :reveal_data_bg: #543210
 	  :END:
     #+END_SRC
 
 *** Single Image Background
     :PROPERTIES:
-    :reveal_background: images/whale.jpg
-    :reveal_background_trans: slide
+    :reveal_data_bg: images/whale.jpg
+    :reveal_data_bg_trans: slide
     :END:
 
-    Set property =reveal_background= to an URL of background image.
-    Set property =reveal_background_trans= to =slide= to make background image
+    Set property =reveal_data_bg= to an URL of background image.
+    Set property =reveal_data_bg_trans= to =slide= to make background image
     sliding rather than fading.
     #+BEGIN_SRC org
     *** Single Image Background
 	:PROPERTIES:
-	:reveal_background: images/whale.jpg
-	:reveal_background_trans: slide
+	:reveal_data_bg: images/whale.jpg
+	:reveal_data_bg_trans: slide
 	:END:
     #+END_SRC
 
 *** Repeating Image Background
     :PROPERTIES:
-    :reveal_background: images/whale.jpg
-    :reveal_background_size: 400px
-    :reveal_background_repeat: repeat
+    :reveal_data_bg: images/whale.jpg
+    :reveal_data_bg_size: 400px
+    :reveal_data_bg_repeat: repeat
     :END:
 
-    Resize background image by setting property =reveal_background_size= to a number.
+    Resize background image by setting property =reveal_data_bg_size= to a number.
 
-    Set property =reveal_background_repeat= to =repeat= to repeat
+    Set property =reveal_data_bg_repeat= to =repeat= to repeat
     image on the background.
     #+BEGIN_SRC org
     *** Repeating Image Background
 	:PROPERTIES:
-	:reveal_background: images/whale.jpg
-	:reveal_background_size: 400px
-	:reveal_background_repeat: repeat
+	:reveal_data_bg: images/whale.jpg
+	:reveal_data_bg_size: 400px
+	:reveal_data_bg_repeat: repeat
 	:END:
     #+END_SRC
 
 ** Set Extra Individual Slide Attribute
-   Set property =reveal_extra_attr= to headings to add any necessary attributes
+   :PROPERTIES:
+   :reveal_data_extra:  style="background-color:green; font-size:99px"
+   :END:
+
+   Set property =reveal_data_extra= to headings to add any necessary attributes
    to slides.
+
+   For example, you can use it to set the background color and the size of the text - such as
+   this very slide.
 
 ** Set Data State for Individual Slide
    :PROPERTIES:
@@ -316,7 +323,7 @@
 	:reveal_data_state: custemevent
 	:END:
    #+END_SRC
-   Availabe data states are: =alert=, =blackout=, =soothe=.
+   +Availabe data states are: =alert=, =blackout=, =soothe=.+
 ** Footnote
    Footnote can be defined and exported to each slide. Inline footnote is recommended.
 
@@ -344,7 +351,7 @@
 
 ** MathJax
   :PROPERTIES:
-  :CUSTOM_ID: my-heading
+  :CUSTOM_ID: heading-of-mj
   :END:
 
    ${n! \over k!(n-k)!} = {n \choose k}$
@@ -357,32 +364,7 @@
    *IMPORTANT*: For local MathJax installation, set option =HTML_MATHJAX= to locate the URL
    pointing to the local MathJax location. Search org-mode documentation for details.
 
-   You can set =#+OPTIONS= tag =reveal_mathjax= to =nil= MathJax to disable the mathjax rendering.
-** Preamble and Postamble					    :ARCHIVE:
-
-   You can define preamble and postamble contents which will not be
-   shown as slides, but will be exported into the body part of the
-   generated HTML file, at just before and after the slide contents.
-
-   Change preamble and postamble contents locally by setting options
-   =REVEAL_PREAMBLE= and =REVEAL_POSTAMBLE=, as illustrated at the
-   heading part of this document.
-
-   To add custom contents into HTML =<head>= parts, set contents to
-   the option =REVEAL_HEAD=. This is similar to =HTML_HEAD= for html
-   export. You can use both, but =REVEAL_HEAD= contents will only be
-   exported for org-reveal.
-
-*** Generating Pre/Postamble by Emacs-Lisp Functions
-
-    If the contents of pre/postamble is the name of an evaluated
-    Emacs-Lisp funtion, which must accept an argument of Org-mode
-    info and return a string, the returned string will be taken
-    as pre/postamble contents.
-
-    So you can embed the Emacs-Lisp function as an Org-Babel source
-    block and mark it to be evaluated at exporting the document.
-
+   You can set =#+OPTIONS= tag =reveal_mathjax= to =nil= to disable the mathjax rendering.
 ** Raw HTML in Slides
    Besides the Org contents, you can embed raw HTML contents
    into slides by placing a =#+REVEAL_HTML= keyword.
@@ -391,7 +373,9 @@
 
    #+REVEAL_HTML: <video width="400" height="300" controls> <source src="images/big_buck_bunny.mp4" type="video/mp4"> </video>
    #+REVEAL_HTML: <iframe width="400" height="300" src="https://www.youtube.com/embed/BYQaD2CAi9A" frameborder="0" allowfullscreen></iframe>
-
+   #+REVEAL_HTML: SPLIT
+   or embed a webpage inside a slide:
+   #+REVEAL_HTML: <object data=/Users/zech/ms_forensic/beta_hand/hellinger_emperor_pcoa_plot_2/index.html width="1600" height="900"> <embed src=/Users/zech/ms_forensic/beta_hand/hellinger_emperor_pcoa_plot_2/index.html width="1600" height="900"> </embed></object>
 ** Speaker Notes
    Reveal.js supports speaker notes, which are displayed in a seperate
    browser window. Press 's' on slide windows will pop up an window
@@ -411,7 +395,7 @@
       ,#+END_NOTES
    #+END_SRC
 
-#+REVEAL: split
+      #+REVEAL_HTML: SPLIT
 
    Due to a bug in Reveal.js, sometimes the speaker notes window
    shows only blank screens. A workaround to this issue is to put
@@ -438,8 +422,8 @@
    You can create links pointings to a headline's text, or its
    custom-id, as the examples below:
 
-   * [[Speaker Notes]]: currently links to headline text does work properly.
-   * [[#my-heading][Heading]]: link to the headings with the specified =CUSTOM_ID= property.
+   * jump to [[Speaker Notes]]: currently links to headline text does work properly.
+   * [[#heading-of-mj][jump to MathJax]]: link to the headings with the specified =CUSTOM_ID= property.
 
 ** Org Table
    An example of how a table is exported in org-reveal:

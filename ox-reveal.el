@@ -66,12 +66,14 @@
     (:reveal-width  nil "reveal_width"  -1 t) ; slide width
     (:reveal-height nil "reveal_height" -1 t) ; slide height
     (:reveal-margin nil "reveal_margin" -1 t) ; slide margin
-    (:reveal-min-scale nil "reveal_min_scale" -1 t)
-    (:reveal-max-scale nil "reveal_max_scale" -1 t)
+    ;; (:reveal-min-scale nil "reveal_min_scale" -1 t)
+    ;; (:reveal-max-scale nil "reveal_max_scale" -1 t)
     ;; enable mathjax by default. To disable mathjax:
     ;; #+OPTIONS: reveal_mathjax:nil
     (:reveal-mathjax nil "reveal_mathjax" t t)
     (:reveal-root "REVEAL_ROOT" nil org-reveal-root t)
+    (:reveal-max-scale "REVEAL_MAX_SCALE" nil -1 t)
+    (:reveal-min-scale "REVEAL_MIN_SCALE" nil -1 t)
     (:reveal-trans "REVEAL_TRANS" nil org-reveal-transition t)
     (:reveal-speed "REVEAL_SPEED" nil org-reveal-transition-speed t)
     (:reveal-theme "REVEAL_THEME" nil org-reveal-theme t)
@@ -231,14 +233,14 @@ holding contextual information."
 		 (if-format " data-transition=\"%s\""
 			    (org-element-property :REVEAL_DATA_TRANSITION headline))
 		 (if-format " data-background=\"%s\""
-			    (org-element-property :REVEAL_BACKGROUND headline))
+			    (org-element-property :REVEAL_DATA_BG headline))
 		 (if-format " data-background-size=\"%s\""
-			    (org-element-property :REVEAL_BACKGROUND_SIZE headline))
+			    (org-element-property :REVEAL_DATA_BG_SIZE headline))
 		 (if-format " data-background-repeat=\"%s\""
-			    (org-element-property :REVEAL_BACKGROUND_REPEAT headline))
+			    (org-element-property :REVEAL_DATA_BG_REPEAT headline))
 		 (if-format " data-background-transition=\"%s\""
-			    (org-element-property :REVEAL_BACKGROUND_TRANS headline))
-		 (if-format " %s" (org-element-property :REVEAL_EXTRA_ATTR headline)))
+			    (org-element-property :REVEAL_DATA_BG_TRANS headline))
+		 (if-format " %s" (org-element-property :REVEAL_DATA_EXTRA headline)))
 	 ;; The HTML content of this headline.
 	 (format "\n<h%d%s>%s</h%d>\n"
 		 level1
@@ -368,8 +370,8 @@ custom variable `org-reveal-root'."
 	     (let ((width (plist-get info :reveal-width))
 		   (height (plist-get info :reveal-height))
 		   (margin (plist-get info :reveal-margin))
-		   (min-scale (plist-get info :reveal-min-scale))
-		   (max-scale (plist-get info :reveal-max-scale)))
+		   (min-scale (string-to-number (plist-get info :reveal-min-scale)))
+		   (max-scale (string-to-number (plist-get info :reveal-max-scale))))
 	       (concat
 		(if (> width 0)     (format "width: %d,      //slide width\n" width) "")
 		(if (> height 0)    (format "height: %d,     //slide height\n" height) "")
@@ -533,7 +535,8 @@ contextual information."
 
 Currently it only used to split a slide into 2 by inserting:
 #+REVEAL_HTML: SPLIT
-in the middle of the slide content."
+in the middle of the slide content.
+This function can potentially be expanded to handle other cases."
   (pcase value
     ("SPLIT" "</section>\n<section>")
     (OTHER  OTHER)))
